@@ -26,7 +26,27 @@ int main(){
 			column[i][j] = temp;
 		}
 	}
-	int matrix[rowInput1][columnInput4]; //행렬 곱셈 배열 선언
+	int matrix[rowInput1][columnInput4];//행렬 곱셈 배열 선언
+	for(int i = 0 ; i < rowInput1 ; i++){
+		for(int j = 0 ; j < columnInput4; j++){
+			matrix[i][j] = 0;
+		}
+	}	
+	
+	for(int i = 0 ; i < rowInput1; i++){
+		for(int j = 0 ; j < columnInput4; j++){
+			for(int k = 0 ; k < rowInput2; k++){
+				matrix[i][j] +=row[i][k] * column[k][j];
+			}
+		}
+	}
+	
+	for(int i = 0 ; i < rowInput1 ; i++){
+		for(int j = 0 ; j < columnInput4; j++){
+			cout << matrix[i][j] << ' ';
+		}
+		cout << '\n';
+	}
 
 	
 	return 0;
