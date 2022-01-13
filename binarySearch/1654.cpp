@@ -1,50 +1,49 @@
-#include <iostream>
 #include <algorithm>
-#include <climits>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-long long arr[10000];
-int K, N;
-int makeLanCable(long long start, long long end){
-	long long mid = (start + end) / 2;
-	long long cableCount = 0;
-	for(int i = 0 ; i < K; i++){
-		cableCount += arr[i] / mid;
-	}
-	return cableCount;
+vector<int> numOfCable;
+long long maxLength = 0;
+int N;
+
+vector<int> vectorInput(int K) {  // K개수만큼만 input을 vector로 받는 함수
+    vector<int> numOfCable;
+    for (int i = 0; i < K; i++) {
+        int temp;
+        cin >> temp;
+        numOfCable.push_back(temp);
+    }
+    return numOfCable;
 }
 
-int main(){
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	
-	cin >> K >> N;
-	for(int i = 0; i < K; i++){
-		cin >> arr[i]; 
-	}
-	sort(arr, arr + K);
-	int ansLength = 0;
-	long long start = 1;
-	long long end = arr[K - 1];
-	
-	while(true){
-		if(start > end)
-			break;
-		long long temp = makeLanCable(start, end);
-		long long mid = (start + end) / 2;
+void parametricSearch(long long low, long long high) {
+	if(low > high)	return ;
+    long long mid = (low + high) / 2;
+    int count = 0;
+    for (int i = 0; i < numOfCable.size(); i++) {
+        count += numOfCable[i] / mid;
+    }
+    if (count >= N) {
+        maxLength = max(maxLength, mid);
+		parametricSearch(mid + 1, high);
+    } 
+	else {
+        parametricSearch(low, mid -1);
+    }
+}
 
-		if(temp < N){
-			end =  mid - 1;
-		}
-		else{
-			if(ansLength < mid)
-				ansLength = mid;
-			start = mid + 1;
-		}
-	}
-	cout << ansLength << '\n';
-	
-	
-	
-	return 0;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int K;
+    cin >> K >> N;
+    numOfCable = vectorInput(K);
+    sort(numOfCable.begin(), numOfCable.end());
+    // parametric Search
+    long long low = 1, high = numOfCable.back();
+	parametricSearch(low, high);
+    cout << maxLength << '\n';
+
+    return 0;
 }

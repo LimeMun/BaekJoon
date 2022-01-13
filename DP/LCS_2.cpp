@@ -11,7 +11,7 @@ int main(){
 // 	입력 받기
 	int stuffNum;
 	int possibleMass;
-	vector <pair<int, int>> allOfStuff;
+	vector <pair<int, int> > allOfStuff;
 	
 	allOfStuff.push_back(make_pair(0, 0));
 	cin >> stuffNum >> possibleMass;
